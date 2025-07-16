@@ -115,6 +115,3 @@ Kontribusi sangat diterima! Jika Anda ingin berkontribusi, silakan fork reposito
 4.  Push ke branch Anda (`git push origin fitur/nama-fitur-baru`).
 5.  Buka Pull Request.
 
-## 📄 Lisensi
-
-
