@@ -117,4 +117,4 @@ Kontribusi sangat diterima! Jika Anda ingin berkontribusi, silakan fork reposito
 
 ## 📄 Lisensi
 
-Proyek ini dilisensikan di bawah [Lisensi MIT](LICENSE).
+
