@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// Model untuk User
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  name      String
+  role      String   // Diubah menjadi String biasa, ini solusinya
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Model untuk Surat Masuk
+model SuratMasuk {
+  id           String     @id @default(uuid())
+  nomorAgenda  String     @unique
+  nomorSurat   String
+  tanggalMasuk DateTime
+  tanggalSurat DateTime
+  pengirim     String
+  perihal      String
+  fileUrl      String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  jenisSurat   JenisSurat @relation(fields: [jenisSuratId], references: [id])
+  jenisSuratId String
+}
+
+// Model untuk Surat Keluar
+model SuratKeluar {
+  id            String     @id @default(uuid())
+  nomorAgenda   String     @unique
+  nomorSurat    String
+  tanggalKeluar DateTime
+  tujuan        String
+  perihal       String
+  isi           String?
+  fileUrl       String
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  jenisSurat    JenisSurat @relation(fields: [jenisSuratId], references: [id])
+  jenisSuratId  String
+}
+
+// Model untuk Jenis Surat
+model JenisSurat {
+  id          String        @id @default(uuid())
+  nama        String        @unique
+  deskripsi   String?
+  suratMasuk  SuratMasuk[]
+  suratKeluar SuratKeluar[]
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  timestamp DateTime @default(now())
+  userId    String
+  userName  String
+  userRole  String
+  action    String // Contoh: "LOGIN", "CREATE_SURAT_MASUK", "DELETE_USER"
+  details   String?  // Detail tambahan, contoh: "Surat ID: xxx"
+}
+
+model TemplateSurat {
+  id            String  @id @default(uuid())
+  nama          String  @unique // Contoh: "Surat Undangan Rapat Wali Murid"
+  subjek        String  // Contoh: "Undangan Rapat Wali Murid"
+  isi           String  // Isi template dalam format HTML
+  placeholders  String 
+}
